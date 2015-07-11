@@ -19,7 +19,7 @@ class DMM:
         self.params['service']   = 'digital'
         self.params['floor']     = 'videoa'
 
-    def search_by_keyword(self, keyword, hits=10):
+    def search(self, keyword, hits=10):
         self.params['timestamp'] = time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime())
         self.params['keyword']   = keyword.encode('euc-jp')
         self.params['hits']      = hits
@@ -61,15 +61,13 @@ if __name__ == '__main__':
         for k, v in d.items():
             print "%s, %s" % (k, v)
 
-    api_id = ''
-    affiliate_id = ''
-    dmm = DMM(api_id, affiliate_id)
-
     import sys
-    query = sys.argv[1].decode('utf-8')
+    api_id = sys.argv[1]
+    affiliate_id = sys.argv[2]
+    query = sys.argv[3].decode('utf-8')
 
-
-    items = dmm.search_by_keyword(query, hits=5)
+    dmm = DMM(api_id, affiliate_id)
+    items = dmm.search(query, hits=5)
 
     for item in items:
         print_dict(item)

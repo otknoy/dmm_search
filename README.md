@@ -15,7 +15,7 @@ from dmm import DMM
 
 // please get from dmm.com
 api_id = 'xxx'
-affiliate_id = xxxx'
+affiliate_id = 'xxxx'
 
 dmm = DMM.DMM(api_id, affiliate_id)
 

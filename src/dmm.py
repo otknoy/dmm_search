@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import urllib
+import urllib.parse
+import urllib.request
 import time
 from xml.etree import ElementTree
-import nkf
 
 class DMM:
     def __init__(self, api_id, affiliate_id):
@@ -23,11 +23,9 @@ class DMM:
         self.params['timestamp'] = time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime())
         self.params['keyword']   = keyword.encode('euc-jp')
         self.params['hits']      = hits
-        url = self.baseurl + '/?' + urllib.urlencode(self.params)
 
-        xml = urllib.urlopen(url).read()
-        xml = nkf.nkf('-w', xml)
-        xml = self._remove_first_line(xml)
+        url = self.baseurl + '/?' + urllib.parse.urlencode(self.params)
+        xml = urllib.request.urlopen(url).read().decode('euc-jp')
         return self._parse_xml(xml)
 
     def _remove_first_line(self, text):
@@ -57,17 +55,14 @@ class DMM:
 
 
 if __name__ == '__main__':
-    def print_dict(d):
-        for k, v in d.items():
-            print "%s, %s" % (k, v)
-
     import sys
     api_id = sys.argv[1]
     affiliate_id = sys.argv[2]
-    query = sys.argv[3].decode('utf-8')
+    query = sys.argv[3]
 
     dmm = DMM(api_id, affiliate_id)
     items = dmm.search(query, hits=5)
 
     for item in items:
-        print_dict(item)
+        print(item)
+

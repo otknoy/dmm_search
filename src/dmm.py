@@ -19,10 +19,12 @@ class DMM:
         self.params['service']   = 'digital'
         self.params['floor']     = 'videoa'
 
-    def search(self, keyword, hits=10):
+    def search(self, keyword, hits=10, offset=1, sort='rank'):
         self.params['timestamp'] = time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime())
         self.params['keyword']   = keyword.encode('euc-jp')
         self.params['hits']      = hits
+        self.params['offset']    = offset
+        self.params['sort']      = sort
 
         url = self.baseurl + '/?' + urllib.parse.urlencode(self.params)
         xml = urllib.request.urlopen(url).read().decode('euc-jp')
@@ -61,7 +63,7 @@ if __name__ == '__main__':
     query = sys.argv[3]
 
     dmm = DMM(api_id, affiliate_id)
-    items = dmm.search(query, hits=5)
+    items = dmm.search(query, hits=5, offset=1, sort='date')
 
     for item in items:
         print(item)

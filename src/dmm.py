@@ -1,34 +1,28 @@
 #!/usr/bin/env python
-import json
+from urllib.parse import urljoin
 import requests
+
 
 class DMM:
     def __init__(self, api_id, affiliate_id):
-        self.baseurl = 'https://api.dmm.com/affiliate/v3'
+        self.base_url = 'https://api.dmm.com/affiliate/v3/'
 
         # required parameters
-        self.api_id       = api_id
+        self.api_id = api_id
         self.affiliate_id = affiliate_id
-        self.site         = 'DMM.R18'
+        self.site = 'DMM.R18'
 
-    def search(self, keyword, hits=10, offset=1, sort='rank'):
-        url = self.baseurl + '/itemList'
+    def __get(self, endpoint, params):
+        url = urljoin(self.base_url, endpoint)
+        return requests.get(url, params=params).json()
 
-        params = {
-            'api_id':       self.api_id,
-            'affiliate_id': self.affiliate_id,
-            'site':         self.site,
-            'keyword':      keyword,
-            'hits':         hits,
-            'offset':       offset,
-            'sort':         sort
-        }
+    def itemList(self, **params):
+        params['api_id'] = self.api_id
+        params['affiliate_id'] = self.affiliate_id
 
-        return requests.get(url, params).json()
+        params['site'] = 'DMM.R18'
 
-
-    def itemList():
-        pass
+        return self.__get('itemList', params)
 
     def floorList():
         pass
@@ -55,9 +49,8 @@ if __name__ == '__main__':
     query = sys.argv[3]
 
     dmm = DMM(api_id, affiliate_id)
-    items = dmm.search(query, hits=16, offset=1, sort='date')
+    items = dmm.itemList(keyword=query, hits=16, offset=1, sort='date')
 
     for item in items['result']['items']:
         print(item['title'])
         print([genre['name'] for genre in item['iteminfo']['genre']])
-

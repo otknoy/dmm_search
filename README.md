@@ -1,6 +1,6 @@
 # DMM API
 
-DMM search API for Python
+DMM API for Python
 
 ## Install
 

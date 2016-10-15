@@ -1,8 +1,6 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
-import requests
-import time
 import json
+import requests
 
 class DMM:
     def __init__(self, api_id, affiliate_id):

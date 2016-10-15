@@ -26,6 +26,28 @@ class DMM:
 
         return requests.get(url, params).json()
 
+
+    def itemList():
+        pass
+
+    def floorList():
+        pass
+
+    def actressSearch():
+        pass
+
+    def genreSearch():
+        pass
+
+    def makerSearch():
+        pass
+
+    def seriesSearch():
+        pass
+
+    def authorSearch():
+        pass
+
 if __name__ == '__main__':
     import sys
     api_id = sys.argv[1]

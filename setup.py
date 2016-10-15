@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='dmm-search',
-    version='1.0.1',
+    version='1.1.0',
     description="DMM search API for Python",
     py_modules=['dmm'],
     package_dir={'': 'src'},

@@ -1,5 +1,6 @@
 from unittest import TestCase
 from nose.tools import ok_, eq_
+
 import dmm
 
 class TestDMM(TestCase):
